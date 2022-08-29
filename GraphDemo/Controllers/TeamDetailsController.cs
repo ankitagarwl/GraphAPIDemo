@@ -14,12 +14,12 @@ namespace GraphDemo.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class WeatherForecastController : ControllerBase
+    public class TeamDetailsController : ControllerBase
     {
-        private readonly ILogger<WeatherForecastController> _logger;
+        private readonly ILogger<TeamDetailsController> _logger;
         private readonly MyConfiguration _myConfiguration;
 
-        public WeatherForecastController(ILogger<WeatherForecastController> logger, IOptions<MyConfiguration> myConfiguration)
+        public TeamDetailsController(ILogger<TeamDetailsController> logger, IOptions<MyConfiguration> myConfiguration)
         {
             _logger = logger;
             _myConfiguration = myConfiguration.Value;
@@ -27,9 +27,14 @@ namespace GraphDemo.Controllers
 
         [HttpGet]
         [EnableCors()]
-        public async Task<IActionResult> Get()
+        public async Task<IActionResult> Get([System.Web.Http.FromUri] string teamId)
         {
-            List<TeamDetail> teamChannels = await GetTeamChannels("63d5b6bc-28c2-49c6-8bbc-de402c206e7d");
+            if (string.IsNullOrWhiteSpace(teamId))
+            {
+                teamId = "63d5b6bc-28c2-49c6-8bbc-de402c206e7d";
+            }
+
+            List<TeamDetail> teamChannels = await GetTeamChannels(teamId);
             return Ok(teamChannels);
         }
 
