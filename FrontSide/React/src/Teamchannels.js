@@ -56,6 +56,7 @@ function Teamchannels() {
                     <small style={{ color : 'red'}} >{errormessage}</small>
                 </div>
             </form>
+            {channels != null && channels.length > 0 && (
             <table className="table table-hover">
                 <thead>
                     <tr>
@@ -82,7 +83,9 @@ function Teamchannels() {
                         )}
                     </>
                 </tbody>
-            </table>
+            </table>)}
+            
+            {channels.length == 0 && (<h1>No Data Fetched yet</h1>)}
         </div>
     );
 }
